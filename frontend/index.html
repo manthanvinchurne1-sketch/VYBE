@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="VYBE — people-first messaging with control over identity, attention and expression.">
+    <meta name="theme-color" content="#07111a">
+    <title>VYBE</title>
+    <link rel="stylesheet" href="style/style.css">
+</head>
+
+<body>
+<div id="toast-region" class="toast-region" aria-live="polite" aria-atomic="true"></div>
+
+<!-- ==================================================
+     AUTH: LOGIN
+================================================== -->
+<section id="login-screen" class="auth-screen">
+    <div class="auth-glow auth-glow-one"></div>
+    <div class="auth-glow auth-glow-two"></div>
+
+    <div class="auth-layout">
+        <div class="auth-brand-panel">
+            <div class="brand-lockup">
+                <div class="brand-mark">V</div>
+                <span class="brand-name">VYBE</span>
+            </div>
+
+            <div class="auth-brand-copy">
+                <p class="eyebrow">PEOPLE • CONTROL • CONNECTION</p>
+                <h1>Make communication<br><span>feel more human.</span></h1>
+                <p class="auth-intro">
+                    Connect with the people you choose, share what matters,
+                    and keep control of your attention.
+                </p>
+
+                <div class="value-row">
+                    <div class="value-pill">
+                        <span class="value-icon">◈</span>
+                        <span>Username-first identity</span>
+                    </div>
+                    <div class="value-pill">
+                        <span class="value-icon">◉</span>
+                        <span>People before noise</span>
+                    </div>
+                    <div class="value-pill">
+                        <span class="value-icon">✦</span>
+                        <span>Your VYBE, your way</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="auth-card-wrap">
+            <div class="auth-card">
+                <div class="auth-card-heading">
+                    <div>
+                        <p class="eyebrow">WELCOME BACK</p>
+                        <h2>Sign in to VYBE</h2>
+                        <p>Continue where you left off.</p>
+                    </div>
+                </div>
+
+                <form id="login-form" novalidate>
+                    <div class="field">
+                        <label for="email">Email or username</label>
+                        <input id="email" type="text" autocomplete="username"
+                               placeholder="you@example.com">
+                    </div>
+
+                    <div class="field">
+                        <label for="password">Password</label>
+                        <div class="input-with-action">
+                            <input id="password" type="password" autocomplete="current-password"
+                                   placeholder="Enter your password">
+                            <button type="button" class="input-action" id="toggle-login-password" aria-label="Show password">Show</button>
+                        </div>
+                    </div>
+
+                    <button class="button button-primary button-wide" type="submit" id="login-button">
+                        <span>Log in</span>
+                        <span class="button-arrow">↗</span>
+                    </button>
+                </form>
+
+                <div class="auth-divider"><span>or</span></div>
+
+                <button class="button button-secondary button-wide" type="button" id="demo-login">
+                    Continue with demo
+                </button>
+
+                <div class="auth-switch">
+                    <span>New to VYBE?</span>
+                    <button class="text-button" type="button" id="create-account-button">Create account</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ==================================================
+     AUTH: REGISTER
+================================================== -->
+<section id="register-screen" class="auth-screen hidden">
+    <div class="auth-glow auth-glow-one"></div>
+    <div class="auth-glow auth-glow-two"></div>
+
+    <div class="auth-layout auth-layout-register">
+        <div class="auth-brand-panel compact">
+            <div class="brand-lockup">
+                <div class="brand-mark">V</div>
+                <span class="brand-name">VYBE</span>
+            </div>
+
+            <div class="auth-brand-copy">
+                <p class="eyebrow">CREATE YOUR IDENTITY</p>
+                <h1>Bring your<br><span>people together.</span></h1>
+                <p class="auth-intro">
+                    Your VYBE starts with a simple identity. Keep your
+                    username yours and decide who gets your attention.
+                </p>
+            </div>
+        </div>
+
+        <div class="auth-card-wrap">
+            <div class="auth-card">
+                <div class="auth-card-heading">
+                    <div>
+                        <p class="eyebrow">NEW ACCOUNT</p>
+                        <h2>Create your account</h2>
+                        <p>Start your VYBE in a few seconds.</p>
+                    </div>
+                </div>
+
+                <form id="register-form" novalidate>
+                    <div class="field">
+                        <label for="register-name">Name</label>
+                        <input id="register-name" type="text" autocomplete="name"
+                               placeholder="Your name">
+                    </div>
+
+                    <div class="field">
+                        <label for="register-email">Email</label>
+                        <input id="register-email" type="email" autocomplete="email"
+                               placeholder="you@example.com">
+                    </div>
+
+                    <div class="field">
+                        <label for="register-password">Password</label>
+                        <div class="input-with-action">
+                            <input id="register-password" type="password" autocomplete="new-password"
+                                   placeholder="At least 8 characters">
+                            <button type="button" class="input-action" id="toggle-register-password" aria-label="Show password">Show</button>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label for="confirm-password">Confirm password</label>
+                        <input id="confirm-password" type="password" autocomplete="new-password"
+                               placeholder="Repeat your password">
+                    </div>
+
+                    <button class="button button-primary button-wide" type="submit" id="register-button">
+                        <span>Create account</span>
+                        <span class="button-arrow">↗</span>
+                    </button>
+                </form>
+
+                <div class="auth-switch auth-switch-back">
+                    <button class="text-button" type="button" id="back-to-login">← Back to login</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ==================================================
+     APP SHELL
+================================================== -->
+<section id="app-shell" class="app-shell hidden">
+
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-top">
+            <div class="sidebar-brand">
+                <div class="brand-mark small">V</div>
+                <div>
+                    <div class="brand-name">VYBE</div>
+                    <div class="brand-subtitle">people-first</div>
+                </div>
+            </div>
+
+            <button class="sidebar-collapse" id="sidebar-collapse" type="button" aria-label="Collapse sidebar">‹</button>
+        </div>
+
+        <div class="profile-mini" id="my-profile-button">
+            <div class="avatar avatar-gradient" id="sidebar-avatar">ME</div>
+            <div class="profile-mini-copy">
+                <strong id="sidebar-name">My Profile</strong>
+                <span id="sidebar-status">● Online</span>
+            </div>
+            <span class="profile-mini-arrow">›</span>
+        </div>
+
+        <nav class="app-nav" aria-label="Main navigation">
+            <button class="nav-item active" data-view="chats" type="button">
+                <span class="nav-icon">▣</span>
+                <span class="nav-label">Chats</span>
+            </button>
+            <button class="nav-item" data-view="people" type="button">
+                <span class="nav-icon">♙</span>
+                <span class="nav-label">People</span>
+            </button>
+            <button class="nav-item" data-view="moments" type="button">
+                <span class="nav-icon">✦</span>
+                <span class="nav-label">Moments</span>
+            </button>
+            <button class="nav-item" data-view="my-vibe" type="button">
+                <span class="nav-icon">◉</span>
+                <span class="nav-label">My Vibe</span>
+            </button>
+        </nav>
+
+        <div class="sidebar-bottom">
+            <button class="sidebar-action" id="settings-button" type="button">
+                <span class="nav-icon">⚙</span>
+                <span class="nav-label">Settings</span>
+            </button>
+            <button class="sidebar-action logout" id="logout-button" type="button">
+                <span class="nav-icon">↪</span>
+                <span class="nav-label">Log out</span>
+            </button>
+        </div>
+    </aside>
+
+    <main class="app-main">
+
+        <!-- ================= CHATS ================= -->
+        <section class="view active" id="view-chats" data-view-panel="chats">
+            <header class="page-header">
+                <div>
+                    <p class="eyebrow">YOUR CONVERSATIONS</p>
+                    <h1>Chats</h1>
+                    <p class="page-subtitle">Keep the conversations that matter close.</p>
+                </div>
+                <button class="button button-primary" type="button" id="open-people-from-chat">
+                    <span>Find people</span>
+                    <span>+</span>
+                </button>
+            </header>
+
+            <div class="chat-layout">
+                <aside class="chat-list-panel">
+                    <div class="search-field compact-search">
+                        <span class="search-icon">⌕</span>
+                        <input type="text" id="chat-search-input" placeholder="Search chats...">
+                    </div>
+
+                    <div id="chat-list" class="chat-list"></div>
+                </aside>
+
+                <section class="chat-panel">
+                    <div class="chat-empty" id="chat-empty-state">
+                        <div class="empty-illustration">
+                            <div class="empty-ring"></div>
+                            <span>⌁</span>
+                        </div>
+                        <p class="eyebrow">NOTHING OPEN</p>
+                        <h2>Choose a conversation</h2>
+                        <p>Open a chat from the left, or connect with someone new from People.</p>
+                        <button class="button button-secondary" type="button" id="empty-find-people">Explore people</button>
+                    </div>
+
+                    <div id="active-chat" class="active-chat hidden">
+                        <header class="chat-header">
+                            <div class="chat-header-person">
+                                <button class="chat-profile-button" id="chat-profile-button" type="button">
+                                    <div class="avatar avatar-small" id="chat-avatar">??</div>
+                                </button>
+                                <div>
+                                    <strong id="chat-user-name">Person</strong>
+                                    <span id="chat-user-status">Available</span>
+                                </div>
+                            </div>
+                            <div class="chat-header-actions">
+                                <button class="icon-button" id="chat-open-profile" type="button" title="Open profile">◔</button>
+                                <button class="icon-button" id="chat-more" type="button" title="More options">⋯</button>
+                            </div>
+                        </header>
+
+                        <div class="messages" id="messages"></div>
+
+                        <form class="message-composer" id="message-form">
+                            <button class="composer-icon" type="button" id="composer-plus" title="Add">＋</button>
+                            <div class="composer-box">
+                                <input id="message-input" type="text" autocomplete="off" placeholder="Write a message...">
+                                <button class="composer-emoji" type="button" id="composer-emoji" title="Emoji">☺</button>
+                            </div>
+                            <button class="send-button" type="submit" aria-label="Send message">↗</button>
+                        </form>
+                    </div>
+                </section>
+            </div>
+        </section>
+
+        <!-- ================= PEOPLE ================= -->
+        <section class="view" id="view-people" data-view-panel="people">
+            <header class="page-header">
+                <div>
+                    <p class="eyebrow">YOUR CONNECTIONS</p>
+                    <h1>People</h1>
+                    <p class="page-subtitle">Meet the people you choose to keep in your VYBE.</p>
+                </div>
+                <button class="button button-primary" type="button" id="add-person-button">
+                    <span>+ Add people</span>
+                </button>
+            </header>
+
+            <div class="toolbar-row">
+                <div class="search-field">
+                    <span class="search-icon">⌕</span>
+                    <input type="text" id="people-search-input" placeholder="Search your people...">
+                </div>
+                <div class="count-chip" id="people-count">0 people</div>
+            </div>
+
+            <div class="people-content-grid">
+                <div class="people-list-section">
+                    <div class="section-heading-row">
+                        <div>
+                            <p class="eyebrow">CONNECTED</p>
+                            <h2>Your people</h2>
+                        </div>
+                        <span class="section-note">Select a person to see their VYBE</span>
+                    </div>
+
+                    <div id="people-list" class="people-grid"></div>
+                </div>
+
+                <aside class="people-insight-card">
+                    <div class="insight-orbit">
+                        <span>◈</span>
+                    </div>
+                    <p class="eyebrow">THE VYBE IDEA</p>
+                    <h3>People first. Noise second.</h3>
+                    <p>
+                        Your People space is for connections you trust.
+                        Conversations live in Chats. Identity lives here.
+                    </p>
+                </aside>
+            </div>
+        </section>
+
+        <!-- ================= MOMENTS ================= -->
+        <section class="view" id="view-moments" data-view-panel="moments">
+            <header class="page-header">
+                <div>
+                    <p class="eyebrow">LIGHTWEIGHT SHARING</p>
+                    <h1>Moments</h1>
+                    <p class="page-subtitle">Share a moment without turning it into a performance.</p>
+                </div>
+                <button class="button button-primary" type="button" id="create-moment-button">
+                    <span>+ New moment</span>
+                </button>
+            </header>
+
+            <div class="moment-layout">
+                <div class="moment-composer-card">
+                    <div class="moment-composer-icon">✦</div>
+                    <div>
+                        <p class="eyebrow">WHAT'S ON YOUR MIND?</p>
+                        <h2>Share something small.</h2>
+                        <p>Text-only for now. We can add media later without changing the core idea.</p>
+                    </div>
+                    <button class="button button-secondary" type="button" id="quick-moment-button">Share a moment</button>
+                </div>
+
+                <div class="moment-feed">
+                    <div class="section-heading-row">
+                        <div>
+                            <p class="eyebrow">YOUR FEED</p>
+                            <h2>Recent moments</h2>
+                        </div>
+                    </div>
+                    <div id="moment-list" class="moment-list"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= MY VIBE ================= -->
+        <section class="view" id="view-my-vibe" data-view-panel="my-vibe">
+            <header class="page-header">
+                <div>
+                    <p class="eyebrow">YOUR CURRENT STATE</p>
+                    <h1>My Vibe</h1>
+                    <p class="page-subtitle">Give people a little context before they message you.</p>
+                </div>
+            </header>
+
+            <div class="vibe-layout">
+                <div class="vibe-editor-card">
+                    <div class="section-heading-row">
+                        <div>
+                            <p class="eyebrow">SET YOUR VYBE</p>
+                            <h2>What should people know?</h2>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label for="vibe-mood">Mood</label>
+                        <select id="vibe-mood">
+                            <option value="">Choose a mood</option>
+                            <option>Focused</option>
+                            <option>Chill</option>
+                            <option>Happy</option>
+                            <option>Busy</option>
+                            <option>Social</option>
+                            <option>Low-key</option>
+                            <option>Recharging</option>
+                        </select>
+                    </div>
+
+                    <div class="field">
+                        <label for="vibe-activity">What are you doing?</label>
+                        <input id="vibe-activity" type="text" maxlength="80"
+                               placeholder="e.g. Building VYBE">
+                    </div>
+
+                    <div class="field">
+                        <label for="vibe-note">Short note</label>
+                        <textarea id="vibe-note" maxlength="140"
+                                  placeholder="e.g. Ping me after 7."></textarea>
+                    </div>
+
+                    <div class="field-inline">
+                        <label class="switch-row">
+                            <span>
+                                <strong>Show my VYBE to people</strong>
+                                <small>Visible on your profile</small>
+                            </span>
+                            <input id="vibe-visible" type="checkbox" checked>
+                            <span class="switch"></span>
+                        </label>
+                    </div>
+
+                    <button class="button button-primary button-wide" type="button" id="save-vibe-button">
+                        Save VYBE
+                    </button>
+                </div>
+
+                <div class="vibe-preview-card">
+                    <p class="eyebrow">PROFILE PREVIEW</p>
+                    <div class="vibe-profile-head">
+                        <div class="avatar avatar-large avatar-gradient" id="vibe-avatar">ME</div>
+                        <div>
+                            <h2 id="vibe-profile-name">My Profile</h2>
+                            <span id="vibe-profile-handle">@you</span>
+                        </div>
+                    </div>
+
+                    <div class="vibe-current-box">
+                        <span class="status-dot"></span>
+                        <div>
+                            <strong id="vibe-preview-mood">VYBE not set</strong>
+                            <p id="vibe-preview-activity">Tell people what you're up to.</p>
+                        </div>
+                    </div>
+
+                    <p class="vibe-preview-note" id="vibe-preview-note">
+                        Your short note will appear here.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+</section>
+
+<!-- ==================================================
+     ADD PEOPLE MODAL
+================================================== -->
+<div id="add-person-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="add-person-title">
+    <div class="modal-card">
+        <button class="modal-close" type="button" id="close-modal" aria-label="Close">×</button>
+
+        <p class="eyebrow">GROW YOUR CIRCLE</p>
+        <h2 id="add-person-title">Find someone on VYBE</h2>
+        <p class="modal-description">Use a username. No phone number needed.</p>
+
+        <form id="people-search-form" class="modal-search" novalidate>
+            <div class="search-field">
+                <span class="search-icon">@</span>
+                <input type="text" id="username-input" placeholder="e.g. alex" autocomplete="off">
+            </div>
+            <button class="button button-primary button-wide" type="submit" id="find-person-button">Find person</button>
+        </form>
+
+        <div id="search-result" class="search-result"></div>
+    </div>
+</div>
+
+<!-- ==================================================
+     PROFILE MODAL
+================================================== -->
+<div id="profile-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="profile-title">
+    <div class="modal-card modal-profile-card">
+        <button class="modal-close" type="button" id="close-profile-modal" aria-label="Close">×</button>
+
+        <div class="profile-hero">
+            <div class="avatar avatar-profile avatar-gradient" id="profile-avatar">??</div>
+            <div>
+                <p class="eyebrow">VYBE PROFILE</p>
+                <h2 id="profile-title">Person</h2>
+                <span id="profile-handle">@username</span>
+            </div>
+        </div>
+
+        <div class="profile-status-line">
+            <span class="status-dot"></span>
+            <span id="profile-status">Available</span>
+        </div>
+
+        <div class="profile-vibe-panel">
+            <p class="eyebrow">CURRENT VYBE</p>
+            <h3 id="profile-vibe-title">VYBE not set</h3>
+            <p id="profile-vibe-note">This person has not shared a current VYBE yet.</p>
+        </div>
+
+        <div class="profile-meta-grid">
+            <div>
+                <span>Connection</span>
+                <strong id="profile-connection-type">Connected</strong>
+            </div>
+            <div>
+                <span>Since</span>
+                <strong id="profile-since">Today</strong>
+            </div>
+        </div>
+
+        <div class="profile-actions">
+            <button class="button button-primary button-wide" type="button" id="profile-message-button">Message</button>
+        </div>
+    </div>
+</div>
+
+<!-- ==================================================
+     MOMENT MODAL
+================================================== -->
+<div id="moment-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="moment-title">
+    <div class="modal-card">
+        <button class="modal-close" type="button" id="close-moment-modal" aria-label="Close">×</button>
+
+        <p class="eyebrow">NEW MOMENT</p>
+        <h2 id="moment-title">Share something small</h2>
+        <p class="modal-description">Keep it real. Keep it lightweight.</p>
+
+        <div class="field">
+            <label for="moment-text">Moment</label>
+            <textarea id="moment-text" maxlength="220" placeholder="What are you up to?"></textarea>
+            <div class="field-meta"><span id="moment-character-count">0</span>/220</div>
+        </div>
+
+        <button class="button button-primary button-wide" type="button" id="publish-moment-button">Share moment</button>
+    </div>
+</div>
+
+<!-- ==================================================
+     APP SETTINGS MODAL
+================================================== -->
+<div id="settings-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="settings-title">
+    <div class="modal-card settings-card">
+        <button class="modal-close" type="button" id="close-settings-modal" aria-label="Close">×</button>
+
+        <p class="eyebrow">APP SETTINGS</p>
+        <h2 id="settings-title">Make VYBE work for you</h2>
+        <p class="modal-description">Control how VYBE behaves on this device.</p>
+
+        <div class="settings-group">
+            <div class="settings-group-title">Notifications</div>
+
+            <label class="setting-row">
+                <span>Message alerts<small>Notify me about new chats.</small></span>
+                <input type="checkbox" id="setting-message-alerts">
+            </label>
+
+            <label class="setting-row">
+                <span>Connection alerts<small>Notify me when someone connects.</small></span>
+                <input type="checkbox" id="setting-connection-alerts">
+            </label>
+        </div>
+
+        <div class="settings-group">
+            <div class="settings-group-title">Privacy</div>
+
+            <label class="setting-row">
+                <span>Show online status<small>Let your people see when you are online.</small></span>
+                <input type="checkbox" id="setting-online-status">
+            </label>
+
+            <label class="setting-row">
+                <span>Allow profile discovery<small>Let people find you by username.</small></span>
+                <input type="checkbox" id="setting-profile-discovery">
+            </label>
+        </div>
+
+        <div class="settings-group">
+            <div class="settings-group-title">Experience</div>
+
+            <label class="setting-row select-row">
+                <span>Theme<small>Choose how VYBE looks on this device.</small></span>
+                <select id="setting-theme">
+                    <option value="dark">Dark</option>
+                    <option value="midnight">Midnight</option>
+                </select>
+            </label>
+
+            <label class="setting-row select-row">
+                <span>Chat density<small>Control how much space messages use.</small></span>
+                <select id="setting-chat-density">
+                    <option value="comfortable">Comfortable</option>
+                    <option value="compact">Compact</option>
+                </select>
+            </label>
+        </div>
+
+        <div class="settings-footer">
+            <button class="button button-secondary button-wide" type="button" id="clear-local-data-button">Clear local data</button>
+            <button class="button button-primary button-wide" type="button" id="save-settings-button">Save settings</button>
+        </div>
+    </div>
+</div>
+
+<!-- ==================================================
+     LOGOUT CONFIRMATION MODAL
+================================================== -->
+<div id="logout-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="logout-title">
+    <div class="modal-card logout-card">
+        <div class="logout-icon">↪</div>
+        <p class="eyebrow">LOG OUT</p>
+        <h2 id="logout-title">Leave VYBE for now?</h2>
+        <p class="modal-description">You can keep your local info on this device or stay signed in.</p>
+
+        <div class="logout-actions">
+            <button class="button button-primary button-wide" type="button" id="save-info-logout">Save info &amp; log out</button>
+            <button class="button button-secondary button-wide" type="button" id="not-now-logout">Not now</button>
+        </div>
+    </div>
+</div>
+
+<script src="script/script.js"></script>
+</body>
+</html>
