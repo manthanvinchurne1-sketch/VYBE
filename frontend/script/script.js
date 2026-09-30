@@ -536,26 +536,25 @@ backToLoginButton.addEventListener(
 );
 
 
+
+
 /* ==================================================
    LOGIN
 ================================================== */
 
 loginForm.addEventListener(
     "submit",
-    (event) => {
+    async (event) => {
 
         event.preventDefault();
 
-        const identity =
-            emailInput.value.trim();
+        const email =
+            emailInput.value.trim().toLowerCase();
 
         const password =
-            passwordInput.value.trim();
+            passwordInput.value;
 
-        if (
-            !identity ||
-            !password
-        ) {
+        if (!email || !password) {
 
             showToast(
                 "Enter your login details.",
@@ -565,30 +564,108 @@ loginForm.addEventListener(
             return;
         }
 
-        if (
-            identity.includes("@")
-        ) {
+        try {
 
-            state.profile.email =
-                identity;
+            const response =
+                await fetch(
+                    "http://localhost:8080/api/auth/login",
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type":
+                                "application/json"
+                        },
+
+                        body: JSON.stringify({
+                            email: email,
+                            password: password
+                        })
+                    }
+                );
+
+            const responseText =
+                await response.text();
+
+
+            if (response.status === 200) {
+
+                const data =
+                    JSON.parse(responseText);
+
+                /*
+                 * Keep the JWT for the current browser tab.
+                 * We will use it for protected API requests.
+                 */
+                sessionStorage.setItem(
+                    "vybe_token",
+                    data.token
+                );
+
+                state.profile.name =
+                    data.name;
+
+                state.profile.email =
+                    data.email;
+
+                state.profile.username =
+                    data.email.split("@")[0];
+
+                saveState();
+
+                loginForm.reset();
+
+                showApp();
+
+                showToast(
+                    "Welcome back."
+                );
+
+                return;
+            }
+
+
+            if (response.status === 401) {
+
+                showToast(
+                    "Invalid email or password.",
+                    "error"
+                );
+
+                return;
+            }
+
+
+            if (response.status === 400) {
+
+                showToast(
+                    "Please check your details.",
+                    "error"
+                );
+
+                return;
+            }
+
+
+            showToast(
+                "Login failed.",
+                "error"
+            );
+
+        } catch (error) {
+
+            console.error(
+                "Login request failed:",
+                error
+            );
+
+            showToast(
+                "Unable to connect to VYBE.",
+                "error"
+            );
         }
-
-        saveState();
-
-        showApp();
     }
 );
-
-
-/* ==================================================
-   DEMO LOGIN
-================================================== */
-
-demoLoginButton.addEventListener(
-    "click",
-    showApp
-);
-
 
 /* ==================================================
    REGISTER
@@ -596,7 +673,7 @@ demoLoginButton.addEventListener(
 
 registerForm.addEventListener(
     "submit",
-    (event) => {
+    async (event) => {
 
         event.preventDefault();
 
@@ -604,7 +681,7 @@ registerForm.addEventListener(
             registerName.value.trim();
 
         const email =
-            registerEmail.value.trim();
+            registerEmail.value.trim().toLowerCase();
 
         const password =
             registerPassword.value;
@@ -613,6 +690,7 @@ registerForm.addEventListener(
             confirmPassword.value;
 
 
+        // Frontend validation
         if (
             !name ||
             !email ||
@@ -630,9 +708,7 @@ registerForm.addEventListener(
 
 
         if (
-            !/^\S+@\S+\.\S+$/.test(
-                email
-            )
+            !/^\S+@\S+\.\S+$/.test(email)
         ) {
 
             showToast(
@@ -670,37 +746,91 @@ registerForm.addEventListener(
         }
 
 
-        state.profile.name =
-            name;
+        try {
 
-        state.profile.email =
-            email;
+            const response =
+                await fetch(
+                    "http://localhost:8080/api/auth/register",
+                    {
+                        method: "POST",
 
-        state.profile.username =
-            name
-                .toLowerCase()
-                .replace(
-                    /[^a-z0-9]/g,
-                    ""
-                )
-                .slice(
-                    0,
-                    24
-                ) || "you";
+                        headers: {
+                            "Content-Type":
+                                "application/json"
+                        },
+
+                        body: JSON.stringify({
+                            name: name,
+                            email: email,
+                            password: password
+                        })
+                    }
+                );
 
 
-        saveState();
+            if (response.status === 201) {
 
-        registerForm.reset();
+                registerForm.reset();
 
-        showToast(
-            "Account details ready."
-        );
+                showToast(
+                    "Account created."
+                );
 
-        showApp();
+                showLogin();
+
+                return;
+            }
+
+
+            if (response.status === 409) {
+
+                showToast(
+                    "Email already registered.",
+                    "error"
+                );
+
+                return;
+            }
+
+
+            if (response.status === 400) {
+
+                const errorData =
+                    await response.text();
+
+                console.log(
+                    "Validation error:",
+                    errorData
+                );
+
+                showToast(
+                    "Please check your details.",
+                    "error"
+                );
+
+                return;
+            }
+
+
+            showToast(
+                "Registration failed.",
+                "error"
+            );
+
+        } catch (error) {
+
+            console.error(
+                "Registration request failed:",
+                error
+            );
+
+            showToast(
+                "Unable to connect to VYBE.",
+                "error"
+            );
+        }
     }
 );
-
 
 /* ==================================================
    PASSWORD TOGGLES
@@ -1305,6 +1435,10 @@ notNowLogoutButton.addEventListener(
 saveInfoLogoutButton.addEventListener(
     "click",
     () => {
+
+        sessionStorage.removeItem(
+            "vybe_token"
+        );
 
         saveState();
 
